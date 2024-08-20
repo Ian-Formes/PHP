@@ -1,5 +1,2 @@
-ipressora#Impressora#
-wfwfwf#Criação Usuário#
-esFsaf#Impressora#
-ipressora#Impressora#
-wfwfwf#Impressora#dsadadsa
+3#Tela azul#Hardware#aaaaaaaaaaaaaaaaaaaaa
+1#Sem net#Rede#ssssssssssssssssssssssssss
