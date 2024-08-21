@@ -1,2 +1,4 @@
-3#Tela azul#Hardware#aaaaaaaaaaaaaaaaaaaaa
-1#Sem net#Rede#ssssssssssssssssssssssssss
+1#Tela azul#Hardware#22222222222222222222222222222
+1#Sem net#Software#22222222222222222222222222222222222
+
+3#RFE#Software#ERFE
