@@ -33,7 +33,7 @@ require_once 'menu.php';
             <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
           </div>
           <div class="modal-body">
-            <form action="opCardapio.php" method="post" enctype="multipart/form-data">
+            <form action="opCardapio.php?acao=cadastrar" method="post" enctype="multipart/form-data">
               <div class="mb-3">
                 <label class="form-label"> Cardápio </label>
                 <input type="text" class="form-control" name="txt_cardapio" placeholder="Digite o nome do Cardápio">
@@ -64,25 +64,60 @@ require_once 'menu.php';
 
         <?php
         $lista = $pdo->query("SELECT * FROM cardapios");
-        
-        while($linha = $lista->fetch(PDO::FETCH_ASSOC)){
-        ?>
 
-        <tr>
-          <th scope="row"> <?php echo $linha['idcardapio'] ?> </th>
-          <td> <?php echo $linha['cardapio'] ?> </td>
-          <td>
-            <img src="img/<?php echo $linha['foto'] ?>" width="100px" alt="">
-          </td>
-          <td>
-            <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#modalCadastro">
-              Editar
-            </button>
-            <button type="button" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#modalCadastro">
-              Excluir
-            </button>
-          </td>
-        </tr>
+        while ($linha = $lista->fetch(PDO::FETCH_ASSOC)) {
+          ?>
+
+          <tr>
+            <th scope="row"> <?php echo $linha['idcardapio'] ?> </th>
+            <td> <?php echo $linha['cardapio'] ?> </td>
+            <td>
+              <img src="img/<?php echo $linha['foto'] ?>" width="100px" alt="">
+            </td>
+            <td>
+              <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#modalEditar<?php echo $linha['idcardapio'] ?>">
+                Editar
+              </button>
+              <button type="button" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#modalExcluir<?php echo $linha['idcardapio'] ?>">
+                Excluir
+              </button>
+            </td>
+          </tr>
+
+          <!-- Modal Excluir - Inicio -->
+          <!-- Modal -->
+          <div class="modal fade" id="modalExcluir<?php echo $linha['idcardapio'] ?>" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+            <div class="modal-dialog">
+              <div class="modal-content">
+                <div class="modal-header">
+                  <h1 class="modal-title fs-5" id="exampleModalLabel"> Deseja excluir o cardápio? </h1>
+                  <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                  <a href="opCardapio.php?acao=excluir&id=<?php echo $linha['idcardapio'] ?>&foto=<?php echo $linha['foto'] ?>" class="btn btn-primary"> Sim </a>
+                  <button class="btn btn-danger"> Não </button>
+                </div>
+              </div>
+            </div>
+          </div>
+          <!-- Modal Excluir - Fim -->
+
+          <!-- Modal Editar - Inicio -->
+          <div class="modal fade" id="modalEditar<?php echo $linha['idcardapio'] ?>" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+            <div class="modal-dialog">
+              <div class="modal-content">
+                <div class="modal-header">
+                  <h1 class="modal-title fs-5" id="exampleModalLabel"> Deseja editar o cardápio? </h1>
+                  <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                  <a href="opCardapio.php?acao=excluir&id=<?php echo $linha['idcardapio'] ?>&foto=<?php echo $linha['foto'] ?>" class="btn btn-primary"> Sim </a>
+                  <button class="btn btn-danger"> Não </button>
+                </div>
+              </div>
+            </div>
+          </div>
+          <!-- Modal Editar - Fim -->
 
         <?php
         }
