@@ -35,7 +35,7 @@ if (isset($_GET['acao']) && $_GET['acao'] == 'excluir') {
     $id = $_GET['id'];
     $foto = $_GET['foto'];
 
-    $del = $pdo->prepare("DELETE FROM pratos WHERE idprato = ?");
+    $del = $pdo->prepare("DELETE FROM pratos WHERE idpratos = ?");
     $del->bindValue(1, $id);
     $del->execute();
 
@@ -50,13 +50,15 @@ if (isset($_GET['acao']) && $_GET['acao'] == 'editar') {
 
     $id = $_GET['id'];
     $fotodb = $_GET['foto'];
+    $idcardapio = $_POST['txt_cardapio'];
 
     //Testar
     if ($_FILES['file_foto']['size'] == 0) {
         //echo 'Sem foto';
-        $edit = $pdo->prepare("UPDATE pratos SET prato = ? WHERE idprato = ?");
+        $edit = $pdo->prepare("UPDATE pratos SET prato = ?, idcardapio = ? WHERE idpratos = ?");
         $edit->bindValue(1, $prato);
-        $edit->bindValue(2, $id);
+        $edit->bindValue(2, $idcardapio);
+        $edit->bindValue(3, $id);
         $edit->execute();
 
         header("Location: pgPrato.php");
@@ -65,10 +67,11 @@ if (isset($_GET['acao']) && $_GET['acao'] == 'editar') {
         unlink('img/' . $fotodb);
 
         if (move_uploaded_file($foto_temp, $destino)) {
-            $edit = $pdo->prepare("UPDATE pratos SET prato = ?, foto = ? WHERE idprato = ?");
+            $edit = $pdo->prepare("UPDATE pratos SET prato = ?, idcardapio = ?, foto = ? WHERE idpratos = ?");
             $edit->bindValue(1, $prato);
-            $edit->bindValue(2, $foto);
-            $edit->bindValue(3, $id);
+            $edit->bindValue(2, $idcardapio);
+            $edit->bindValue(3, $foto);
+            $edit->bindValue(4, $id);
             $edit->execute();
     
             header("Location: pgPrato.php");

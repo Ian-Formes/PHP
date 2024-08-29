@@ -42,14 +42,15 @@ require_once 'menu.php';
                                     placeholder="Digite o nome do Prato">
                             </div>
                             <div class="mb-3">
-                            <label class="form-label">Selecione o Cardápio</label>
+                                <label class="form-label">Selecione o Cardápio</label>
                                 <select class="form-select" name="txt_cardapio">
-                                    <?php 
-                                      $sql = $pdo->query("SELECT * FROM cardapios ORDER BY cardapio");
+                                    <?php
+                                    $sql = $pdo->query("SELECT * FROM cardapios ORDER BY cardapio");
 
-                                      while ($linha = $sql->fetch(PDO::FETCH_ASSOC)) {                        
-                                    ?>
-                                    <option value="<?php echo $linha['idcardapio']?>"> <?php echo $linha['cardapio']?> </option>
+                                    while ($linha = $sql->fetch(PDO::FETCH_ASSOC)) {
+                                        ?>
+                                        <option value="<?php echo $linha['idcardapio'] ?>"> <?php echo $linha['cardapio'] ?>
+                                        </option>
 
                                     <?php } ?>
                                 </select>
@@ -81,9 +82,10 @@ require_once 'menu.php';
 
                 <?php
                 $lista = $pdo->query(
-                "SELECT p.idpratos, p.prato, p.foto, c.cardapio, c.idcardapio
+                    "SELECT p.idpratos, p.prato, p.foto, c.cardapio, c.idcardapio
                     FROM pratos p INNER JOIN cardapios c
-                    ON p.idcardapio = c.idcardapio");
+                    ON p.idcardapio = c.idcardapio"
+                );
 
                 while ($linha = $lista->fetch(PDO::FETCH_ASSOC)) {
                     ?>
@@ -108,7 +110,7 @@ require_once 'menu.php';
                     </tr>
 
                     <!-- Modal Excluir - Início -->
-                    <div class="modal fade" id="modalExcluir<?php echo $linha['idprato'] ?>" tabindex="-1"
+                    <div class="modal fade" id="modalExcluir<?php echo $linha['idpratos'] ?>" tabindex="-1"
                         aria-labelledby="exampleModalLabel" aria-hidden="true">
                         <div class="modal-dialog">
                             <div class="modal-content">
@@ -118,7 +120,7 @@ require_once 'menu.php';
                                         aria-label="Close"></button>
                                 </div>
                                 <div class="modal-body">
-                                    <a href="opPrato.php?acao=excluir&id=<?php echo $linha['idprato'] ?>&foto=<?php echo $linha['foto'] ?>"
+                                    <a href="opPrato.php?acao=excluir&id=<?php echo $linha['idpratos'] ?>&foto=<?php echo $linha['foto'] ?>"
                                         class="btn btn-primary">Sim</a>
                                     <button class="btn btn-danger" data-bs-dismiss="modal">Não</button>
                                 </div>
@@ -128,7 +130,7 @@ require_once 'menu.php';
                     <!-- Modal Excluir - Fim -->
 
                     <!-- Modal Editar - Início -->
-                    <div class="modal fade" id="modalEditar<?php echo $linha['idprato'] ?>" tabindex="-1"
+                    <div class="modal fade" id="modalEditar<?php echo $linha['idpratos'] ?>" tabindex="-1"
                         aria-labelledby="exampleModalLabel" aria-hidden="true">
                         <div class="modal-dialog">
                             <div class="modal-content">
@@ -140,12 +142,31 @@ require_once 'menu.php';
                                 <div class="modal-body">
 
                                     <form
-                                        action="opPrato.php?acao=editar&id=<?php echo $linha['idprato'] ?>&foto=<?php echo $linha['foto'] ?>"
+                                        action="opPrato.php?acao=editar&id=<?php echo $linha['idpratos'] ?>&foto=<?php echo $linha['foto'] ?>"
                                         method="post" enctype="multipart/form-data">
                                         <div class="mb-3">
                                             <label class="form-label">Prato</label>
                                             <input type="text" class="form-control" name="txt_prato"
                                                 placeholder="Digite o nome do Prato" value="<?php echo $linha['prato'] ?>">
+                                        </div>
+                                        <div class="mb-3">
+                                            <label for="" class="form-label"> Selecione o cardápio </label>
+                                            <select class="form-select" name="txt_cardapio">
+                                                <?php
+                                                $sql = $pdo->query("SELECT * FROM cardapios ORDER BY cardapio");
+
+                                                while ($linhac = $sql->fetch(PDO::FETCH_ASSOC)) {
+
+                                                    if($linha['idcardapio'] == $linhac['idcardapio']) {
+                                                    ?>
+                                                    <option value="<?php echo $linhac['idcardapio'] ?>">
+                                                        <?php echo $linhac['cardapio'] ?> </option>
+
+                                                <?php } else { ?>
+                                                    <option value="<?php echo $linhac['idcardapio'] ?>">
+                                                        <?php echo $linhac['cardapio'] ?> </option>
+                                                <?php } } ?>
+                                            </select>
                                         </div>
                                         <div class="mb-3">
                                             <label for="formFile" class="form-label">Foto</label>
