@@ -11,5 +11,6 @@ class homeController extends controller{
 
         $this->loadTemplate('home', $dados);
     }
+   
 
 }
